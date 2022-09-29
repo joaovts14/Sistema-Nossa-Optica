@@ -1,9 +1,9 @@
 package br.com.alura.sistema.controller;
 
-import br.com.alura.sistema.controller.dto.ClienteDTO;
-import br.com.alura.sistema.controller.form.ClienteForm;
-import br.com.alura.sistema.modelo.Cliente;
-import br.com.alura.sistema.repository.ClienteRepository;
+import br.com.alura.sistema.controller.dto.ProdutoDTO;
+import br.com.alura.sistema.controller.form.ProdutoForm;
+import br.com.alura.sistema.modelo.Produto;
+import br.com.alura.sistema.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,24 +17,30 @@ import java.util.List;
 @RequestMapping("/produtos")
 public class ProdutosController {
 
-
     @Autowired
-    ClienteRepository clienteRepository;
+    ProdutoRepository produtoRepository;
 
     @GetMapping
-    public List<ClienteDTO> lista( ) {
-        List<Cliente> clientes = clienteRepository.findAll();
-        return ClienteDTO.converter(clientes);
+    public List<ProdutoDTO> lista( ) {
+        List<Produto> produtos = produtoRepository.findAll();
+        return ProdutoDTO.converter(produtos);
+    }
+
+    @GetMapping("/{numeracao}")
+    public ProdutoDTO detalhar(@PathVariable int numeracao){
+
+        Produto produto = produtoRepository.findByNumeracao(numeracao);
+        return new ProdutoDTO(produto);
+
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> cadastra(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
-        Cliente cliente = form.converter();
-        clienteRepository.save(cliente);
-//        topicoRepository.save(topicoRepositoryco);
+    public ResponseEntity<ProdutoDTO> cadastra(@RequestBody @Valid ProdutoForm form, UriComponentsBuilder uriBuilder) {
+        Produto produto = form.converter();
+        produtoRepository.save(produto);
 
-        URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getId()).toUri();
-        return ResponseEntity.created(uri).body(new ClienteDTO(cliente));
+        URI uri = uriBuilder.path("/produtos/{numeracao}").buildAndExpand(produto.getNumeracao()).toUri();
+        return ResponseEntity.created(uri).body(new ProdutoDTO(produto));
     }
 
 
