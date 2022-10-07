@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProdutoRepository extends JpaRepository <Produto,Long> {
 
-    Produto findByNumeracao(int numeracao);
+    Produto getReferenceById(Long id);
 }

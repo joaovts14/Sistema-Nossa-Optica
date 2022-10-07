@@ -26,10 +26,10 @@ public class ProdutosController {
         return ProdutoDTO.converter(produtos);
     }
 
-    @GetMapping("/{numeracao}")
-    public ProdutoDTO detalhar(@PathVariable int numeracao){
+    @GetMapping("/{id}")
+    public ProdutoDTO detalhar(@PathVariable Long id){
 
-        Produto produto = produtoRepository.findByNumeracao(numeracao);
+        Produto produto = produtoRepository.getReferenceById(id);
         return new ProdutoDTO(produto);
 
     }
@@ -39,7 +39,7 @@ public class ProdutosController {
         Produto produto = form.converter();
         produtoRepository.save(produto);
 
-        URI uri = uriBuilder.path("/produtos/{numeracao}").buildAndExpand(produto.getNumeracao()).toUri();
+        URI uri = uriBuilder.path("/produtos/{id}").buildAndExpand(produto.getId()).toUri();
         return ResponseEntity.created(uri).body(new ProdutoDTO(produto));
     }
 

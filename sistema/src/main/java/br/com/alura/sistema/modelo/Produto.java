@@ -3,6 +3,7 @@ package br.com.alura.sistema.modelo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Produto {
@@ -10,7 +11,11 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int numeracao;
+    private Long id;
+    private String codigo;
+    private String descricao;
+    private String numeroNF;
+    private Date dataDeEmissaoNF;
     private Long preco;
     private Long valorDeCompra;
     @JsonIgnore
@@ -20,8 +25,12 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int numeracao, Long preco, Long valorDeCompra) {
-        this.numeracao = numeracao;
+    public Produto(String codigo, String descricao, String numeroNF,
+                   Date dataDeEmissaoNF, Long preco, Long valorDeCompra) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.numeroNF = numeroNF;
+        this.dataDeEmissaoNF = dataDeEmissaoNF;
         this.preco = preco;
         this.valorDeCompra = valorDeCompra;
         this.venda = venda;
@@ -29,12 +38,44 @@ public class Produto {
 
 
 
-    public int getNumeracao() {
-        return numeracao;
+    public Long getId() {
+        return id;
     }
 
-    public void setNumeracao(int numeracao) {
-        this.numeracao = numeracao;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getNumeroNF() {
+        return numeroNF;
+    }
+
+    public void setNumeroNF(String numeroNF) {
+        this.numeroNF = numeroNF;
+    }
+
+    public Date getDataDeEmissaoNF() {
+        return dataDeEmissaoNF;
+    }
+
+    public void setDataDeEmissaoNF(Date dataDeEmissaoNF) {
+        this.dataDeEmissaoNF = dataDeEmissaoNF;
     }
 
     public Long getPreco() {

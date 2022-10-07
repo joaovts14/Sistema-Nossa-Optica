@@ -1,15 +1,23 @@
 package br.com.alura.sistema.controller.form;
 
 import br.com.alura.sistema.modelo.Produto;
-
+import java.util.Date;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ProdutoForm {
 
+    @NotNull @NotEmpty
+    private String codigo;
 
-    @NotNull @Min(0)
-    private int numeracao;
+    @NotNull @NotEmpty
+    private String descricao;
+
+    @NotNull @NotEmpty
+    private String numeroNF;
+
+    private Date dataDeEmissaoNF;
 
     @NotNull @Min(0)
     private Long preco;
@@ -18,12 +26,36 @@ public class ProdutoForm {
     private Long valorDeCompra;
 
 
-    public int getNumeracao() {
-        return numeracao;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setNumeracao(int numeracao) {
-        this.numeracao = numeracao;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getNumeroNF() {
+        return numeroNF;
+    }
+
+    public void setNumeroNF(String numeroNF) {
+        this.numeroNF = numeroNF;
+    }
+
+    public Date getDataDeEmissaoNF() {
+        return dataDeEmissaoNF;
+    }
+
+    public void setDataDeEmissaoNF(Date dataDeEmissaoNF) {
+        this.dataDeEmissaoNF = dataDeEmissaoNF;
     }
 
     public Long getPreco() {
@@ -43,7 +75,7 @@ public class ProdutoForm {
     }
 
     public Produto converter() {
-        return new Produto(numeracao, preco, valorDeCompra);
+        return new Produto(codigo, descricao, numeroNF, dataDeEmissaoNF, preco, valorDeCompra);
     }
 
 }
