@@ -19,9 +19,9 @@ public class ProdutoDTO {
 
     private Date dataDeEmissaoNF;
 
-    private Long preco;
+    private Float preco;
 
-    private Long valorDeCompra;
+    private Float valorDeCompra;
 
     private Venda venda;
 
@@ -75,19 +75,19 @@ public class ProdutoDTO {
         this.dataDeEmissaoNF = dataDeEmissaoNF;
     }
 
-    public Long getPreco() {
+    public Float getPreco() {
         return preco;
     }
 
-    public void setPreco(Long preco) {
+    public void setPreco(Float preco) {
         this.preco = preco;
     }
 
-    public Long getValorDeCompra() {
+    public Float getValorDeCompra() {
         return valorDeCompra;
     }
 
-    public void setValorDeCompra(Long valorDeCompra) {
+    public void setValorDeCompra(Float valorDeCompra) {
         this.valorDeCompra = valorDeCompra;
     }
 

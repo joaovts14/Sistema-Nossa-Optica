@@ -55,8 +55,8 @@ public class ProdutosController {
         return ResponseEntity.created(uri).body(new ProdutoDTO(produto));
     }
 
-    @PostMapping
-    public ResponseEntity<ProdutoDTO> cadastra_xml(@RequestBody String xml_base64, UriComponentsBuilder uriBuilder) {
+    @PostMapping("/cadastro-por-xml")
+    void cadastraXml(@RequestBody String xml_base64, UriComponentsBuilder uriBuilder) {
         try {
             byte[] decodedBytes = Base64.getDecoder().decode(xml_base64);
             String decodedString = new String(decodedBytes);
@@ -69,9 +69,10 @@ public class ProdutosController {
             Element ideElement = (Element) ideNode;
             String serie = ideElement.getElementsByTagName("serie").item(0).getTextContent();
             String nNF = ideElement.getElementsByTagName("nNF").item(0).getTextContent();
+            String numeroNF = serie + "-" + nNF;
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
             String dString = ideElement.getElementsByTagName("dhEmi").item(0).getTextContent();
-            Date date = df.parse(dString);
+            Date dateNota = df.parse(dString);
             NodeList nodeList = doc.getElementsByTagName("det");
             for (int itr = 0; itr < nodeList.getLength(); itr++) {
                 Node detNode = nodeList.item(itr);
@@ -79,18 +80,25 @@ public class ProdutosController {
                     Element detElement = (Element) detNode;
                     Node prodNode = detElement.getElementsByTagName("prod").item(0);
                     Element prodElement = (Element) prodNode;
-                    String cProd = prodElement.getElementsByTagName("cProd").item(0).getTextContent();
-                    String xProd = prodElement.getElementsByTagName("xProd").item(0).getTextContent();
+                    String codigoProduto = prodElement.getElementsByTagName("cProd").item(0).getTextContent();
+                    String descricaoProduto = prodElement.getElementsByTagName("xProd").item(0).getTextContent();
                     String qCom = prodElement.getElementsByTagName("qCom").item(0).getTextContent();
                     String uCom = prodElement.getElementsByTagName("uCom").item(0).getTextContent();
-                    String vProd = prodElement.getElementsByTagName("vProd").item(0).getTextContent();
+                    Float valorProduto = Float.parseFloat(prodElement.getElementsByTagName("vProd").item(0).getTextContent());
                     Node impostoNode = detElement.getElementsByTagName("imposto").item(0);
                     Element impostoElement = (Element) impostoNode;
                     Node IPINode = impostoElement.getElementsByTagName("IPI").item(0);
                     Element IPIElement = (Element) IPINode;
                     Node IPITribNode = IPIElement.getElementsByTagName("IPITrib").item(0);
                     Element IPITribElement = (Element) IPITribNode;
-                    String vIPI = IPITribElement.getElementsByTagName("vIPI").item(0).getTextContent();
+                    Float impostoProduto = Float.parseFloat(IPITribElement.getElementsByTagName("vIPI").item(0).getTextContent());
+                    Float custoProduto = valorProduto + impostoProduto;
+                    Produto produto = new Produto(codigoProduto, descricaoProduto, numeroNF, dateNota, null, custoProduto);
+                    produtoRepository.save(produto);
+
+                    //URI uri = uriBuilder.path("/produtos/{id}").buildAndExpand(produto.getId()).toUri();
+
+                    //return ResponseEntity.created(uri).body(new ProdutoDTO(produto));
                 }
             }
         }
@@ -98,7 +106,6 @@ public class ProdutosController {
             e.printStackTrace();
         }
 
-        return null;
     }
 
 
