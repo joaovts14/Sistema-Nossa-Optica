@@ -16,8 +16,8 @@ public class Produto {
     private String descricao;
     private String numeroNF;
     private Date dataDeEmissaoNF;
-    private Long preco;
-    private Long valorDeCompra;
+    private Float preco;
+    private Float valorDeCompra;
     @JsonIgnore
     @ManyToOne
     private Venda venda;
@@ -26,7 +26,7 @@ public class Produto {
     }
 
     public Produto(String codigo, String descricao, String numeroNF,
-                   Date dataDeEmissaoNF, Long preco, Long valorDeCompra) {
+                   Date dataDeEmissaoNF, Float preco, Float valorDeCompra) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.numeroNF = numeroNF;
@@ -78,19 +78,19 @@ public class Produto {
         this.dataDeEmissaoNF = dataDeEmissaoNF;
     }
 
-    public Long getPreco() {
+    public Float getPreco() {
         return preco;
     }
 
-    public void setPreco(Long preco) {
+    public void setPreco(Float preco) {
         this.preco = preco;
     }
 
-    public Long getValorDeCompra() {
+    public Float getValorDeCompra() {
         return valorDeCompra;
     }
 
-    public void setValorDeCompra(Long valorDeCompra) {
+    public void setValorDeCompra(Float valorDeCompra) {
         this.valorDeCompra = valorDeCompra;
     }
 

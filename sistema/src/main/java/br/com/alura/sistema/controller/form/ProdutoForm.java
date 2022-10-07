@@ -20,10 +20,10 @@ public class ProdutoForm {
     private Date dataDeEmissaoNF;
 
     @NotNull @Min(0)
-    private Long preco;
+    private Float preco;
 
     @NotNull @Min(0)
-    private Long valorDeCompra;
+    private Float valorDeCompra;
 
 
     public String getCodigo() {
@@ -58,19 +58,19 @@ public class ProdutoForm {
         this.dataDeEmissaoNF = dataDeEmissaoNF;
     }
 
-    public Long getPreco() {
+    public Float getPreco() {
         return preco;
     }
 
-    public void setPreco(Long preco) {
+    public void setPreco(Float preco) {
         this.preco = preco;
     }
 
-    public Long getValorDeCompra() {
+    public Float getValorDeCompra() {
         return valorDeCompra;
     }
 
-    public void setValorDeCompra(Long valorDeCompra) {
+    public void setValorDeCompra(Float valorDeCompra) {
         this.valorDeCompra = valorDeCompra;
     }
 
