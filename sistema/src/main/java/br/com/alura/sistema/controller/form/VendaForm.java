@@ -47,14 +47,14 @@ public class VendaForm {
         Cliente cliente = clienteRepository.getReferenceById(teste.getId());
         List<Produto> produtos = new ArrayList<>();
         idsProdutos.forEach(id ->{
-            produtos.add(produtoRepository.findByNumeracao(Integer.parseInt(id)));
+            produtos.add(produtoRepository.getReferenceById(Long.parseLong(id)));
 
         });
         Venda venda = new Venda(cliente,valorTotalCompra,produtos);
         venda = vendaRepository.save(venda);
         Venda finalVenda = venda;
         idsProdutos.forEach(id ->{
-            Produto produto2 = produtoRepository.findByNumeracao(Integer.parseInt(id));
+            Produto produto2 = produtoRepository.getReferenceById(Long.parseLong(id));
             produto2.setVenda(finalVenda);
             produtoRepository.save(produto2);
 
